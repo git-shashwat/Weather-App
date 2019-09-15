@@ -8,7 +8,7 @@ submitBtn.addEventListener('click', (event) => {
     msg1.textContent = 'Fetching...'
     msg2.innerHTML = `<div class="spinner-border" role="status">
   </div>`
-    fetch(`http://localhost:3000/weather?address=${locationInput.value}`).then((response) => {
+    fetch(`/weather?address=${locationInput.value}`).then((response) => {
         response.json().then((weather) => {
             if (weather.error) {
                 msg1.textContent = weather.error
