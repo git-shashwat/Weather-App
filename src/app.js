@@ -36,7 +36,7 @@ app.get('/about', (req,res) => {
 
 app.get('/help', (req, res) => {
     res.render('help', {
-        helpMsg: "This is awesome isn't it.",
+        helpMsg: "This is a help message.",
         title: 'Help',
         name: 'Shashwat',
     })
