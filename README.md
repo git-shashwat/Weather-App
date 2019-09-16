@@ -5,3 +5,5 @@ A Node.js Application making use of Darksky and Mapbox API.
 $ git clone https://github.com/git-shashwat/Weather-App.git
 $ npm install
 $ npm run dev
+
+![Weather App](./public/img/weather-ss.jpg)
