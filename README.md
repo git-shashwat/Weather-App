@@ -6,4 +6,4 @@ A Node.js Application making use of Darksky and Mapbox API.
 + $ npm install
 + $ npm run dev
 
-![Weather App](/img/weather-ss.jpg)
+![Weather App](public/img/weather-ss.jpg)
