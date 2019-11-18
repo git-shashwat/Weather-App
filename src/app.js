@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
-const geoCode = require('./utils/geocode')
+const { geoCode, revGeoCode } = require('./utils/geocode')
 const forecast = require('./utils/forecast')
 const log = console.log;
 
@@ -44,29 +44,48 @@ app.get('/help', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
-    if(!req.query.address){
-        return res.send({
-            error: 'Please provide a location to search for'
-        })
-    }
-    geoCode(req.query.address, (error, {lattitude, longitude, location} = {}) => {
-        if (error) {
-            return res.send({
-                error: error,
-            })
-        }
-        forecast(lattitude,longitude, (error, { forecast } = {}) => {
+    if (req.query.longitude && req.query.lattitude) {
+        forecast(req.query.lattitude, req.query.longitude, (error, { forecast } = {}) => {
             if (error) {
                 return res.send({
                     error: error,
                 }) 
             }
-            res.send({
-                forecast: forecast,
-                location: location,
+            revGeoCode(req.query.longitude, req.query.lattitude, (error, location) => {
+                if (error) {
+                    return res.send({
+                        error: error,
+                    })
+                }
+                res.send({
+                    forecast: forecast,
+                    location: location,
+                })    
+            })     
+        })
+    }
+    else if (req.query.address) {
+        geoCode(req.query.address, (error, {lattitude, longitude, location} = {}) => {
+            if (error) {
+                return res.send({
+                    error: error,
+                })
+            }
+            forecast(lattitude,longitude, (error, { forecast } = {}) => {
+                if (error) {
+                    return res.send({
+                        error: error,
+                    }) 
+                }
+                res.send({
+                    forecast: forecast,
+                    location: location,
+                })
             })
         })
-    })
+    } else {
+        res.send({ error: 'Provide a location to search for!' })
+    }
 })
 
 app.get('/help/*', (req,res) => {
