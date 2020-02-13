@@ -3,7 +3,6 @@ const express = require('express')
 const hbs = require('hbs')
 const { geoCode, revGeoCode } = require('./utils/geocode')
 const forecast = require('./utils/forecast')
-const log = console.log;
 
 const app = express()
 const port = process.env.PORT || 3000
